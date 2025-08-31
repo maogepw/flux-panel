@@ -7,14 +7,14 @@ hero:
   tagline: "功能强大的流量转发管理平台，支持灵活的流量计费和限速功能"
   actions:
     - theme: brand
-      text: "DreamCloud"
-      link: https://whmcs.as211392.com/
+      text: "Cloudflare"
+      link: https://www.cloudflare.com/
     - theme: brand
       text: 快速开始
       link: /getting-started
     - theme: alt
       text: 查看源码
-      link: https://github.com/bqlpfy/flux-panel
+      link: https://github.com/StarVM-OpenSource/flux-panel
 
 features:
   - icon: 🔄
@@ -55,10 +55,8 @@ features:
 
 如果您在使用过程中遇到问题或有功能建议，欢迎：
 
-- 📱 [加入 Telegram 群组](https://t.me/+wdVDni1fdyI0YzE1)
 - 🐛 [报告问题](https://github.com/bqlpfy/flux-panel/issues)
 - 💡 [功能建议](https://github.com/bqlpfy/flux-panel/issues)
-- 🤝 [参与贡献](https://github.com/bqlpfy/flux-panel/pulls)
 
 ## 免责声明
 
@@ -66,4 +64,4 @@ features:
 
 ---
 
-**本网站由 [DreamCloud](https://whmcs.as211392.com/) 提供防御支持** 
+**本网站由 [Cloudflare](https://www.cloudflare.com/) 提供防御支持** 
