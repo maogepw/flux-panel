@@ -1,14 +1,28 @@
 #!/bin/bash
-# 下载地址
-DOWNLOAD_URL="https://github.com/StarVM-OpenSource/flux-panel/releases/download/gost-latest/gost"
+# 下载地址基础 URL
+DOWNLOAD_URL_BASE="https://github.com/StarVM-OpenSource/flux-panel/releases/download/gost-latest/gost"
 INSTALL_DIR="/etc/gost"
+
+# 检查系统架构
+ARCH=$(uname -m)
+case "$ARCH" in
+    "x86_64")
+        DOWNLOAD_URL="${DOWNLOAD_URL_BASE}"
+        ;;
+    "aarch64" | "arm64")
+        DOWNLOAD_URL="${DOWNLOAD_URL_BASE}-arm64"
+        ;;
+    *)
+        echo "❌ 警告: 不支持的系统架构 ${ARCH}，将尝试下载默认版本。"
+        DOWNLOAD_URL="${DOWNLOAD_URL_BASE}"
+        ;;
+esac
+
+# 检查是否在中国大陆，并使用镜像加速
 COUNTRY=$(curl -s https://ipinfo.io/country)
 if [ "$COUNTRY" = "CN" ]; then
-    # 拼接 URL
     DOWNLOAD_URL="https://ghfast.top/${DOWNLOAD_URL}"
 fi
-
-
 
 # 显示菜单
 show_menu() {
@@ -153,11 +167,14 @@ install_gost() {
 
   # 下载 gost
   echo "⬇️ 下载 gost 中..."
-  curl -L "$DOWNLOAD_URL" -o "$INSTALL_DIR/gost"
-  if [[ ! -f "$INSTALL_DIR/gost" || ! -s "$INSTALL_DIR/gost" ]]; then
+  curl -L "$DOWNLOAD_URL" -o "$INSTALL_DIR/gost.new"
+  if [[ ! -f "$INSTALL_DIR/gost.new" || ! -s "$INSTALL_DIR/gost.new" ]]; then
     echo "❌ 下载失败，请检查网络或下载链接。"
     exit 1
   fi
+  
+  # 重命名下载文件
+  mv "$INSTALL_DIR/gost.new" "$INSTALL_DIR/gost"
   chmod +x "$INSTALL_DIR/gost"
   echo "✅ 下载完成"
 
@@ -310,7 +327,7 @@ main() {
   # 显示交互式菜单
   while true; do
     show_menu
-    read -p "请输入选项 (1-5): " choice
+    read -p "请输入选项 (1-4): " choice
     
     case $choice in
       1)
@@ -329,17 +346,12 @@ main() {
         exit 0
         ;;
       4)
-        block_protocol
-        delete_self
-        exit 0
-        ;;
-      5)
         echo "👋 退出脚本"
         delete_self
         exit 0
         ;;
       *)
-        echo "❌ 无效选项，请输入 1-5"
+        echo "❌ 无效选项，请输入 1-4"
         echo ""
         ;;
     esac
