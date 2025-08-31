@@ -2,9 +2,11 @@
 
 
 本项目基于 [go-gost/gost](https://github.com/go-gost/gost) 和 [go-gost/x](https://github.com/go-gost/x) 两个开源库，实现了转发面板。
+
+作者已停更，哀悼这么好的一个项目，倒卖的那个祝你身体健康
 ---
 ## 文档地址
-- [文档地址](https://tes.cc)
+- [文档地址](https://flux-panel.lxc.wiki/)
 ---
 ## 特性
 
