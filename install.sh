@@ -144,22 +144,50 @@ while getopts "a:s:" opt; do
   esac
 done
 
+# 创建 OpenRC 服务文件
+create_openrc_service() {
+    SERVICE_FILE="/etc/init.d/gost"
+    cat > "$SERVICE_FILE" <<EOF
+#!/sbin/openrc-run
+
+name="gost"
+description="Gost Proxy Service"
+command="/etc/gost/gost"
+command_args=""
+pidfile="/run/gost.pid"
+directory="/etc/gost"
+
+depend() {
+    need localmount net
+}
+
+start_stop_daemon_args="--pidfile \${pidfile} --background --make-pidfile"
+EOF
+
+    chmod +x "$SERVICE_FILE"
+    echo "📄 已创建 OpenRC 服务文件: $SERVICE_FILE"
+}
+
 # 安装功能
 install_gost() {
   echo "🚀 开始安装 GOST..."
   get_config_params
 
-    # 检查并安装 tcpkill
+  # 检查并安装 tcpkill
   check_and_install_tcpkill
   
 
   mkdir -p "$INSTALL_DIR"
 
-  # 停止并禁用已有服务
-  if systemctl list-units --full -all | grep -Fq "gost.service"; then
+  # 检测并停止现有服务
+  if command -v systemctl &> /dev/null && systemctl list-units --full -all | grep -Fq "gost.service"; then
     echo "🔍 检测到已存在的gost服务"
     systemctl stop gost 2>/dev/null && echo "🛑 停止服务"
     systemctl disable gost 2>/dev/null && echo "🚫 禁用自启"
+  elif command -v rc-service &> /dev/null && rc-service -c | grep -Fq "gost"; then
+    echo "🔍 检测到已存在的gost服务 (OpenRC)"
+    rc-service gost stop 2>/dev/null && echo "🛑 停止服务"
+    rc-update del gost 2>/dev/null && echo "🚫 禁用自启"
   fi
 
   # 删除旧文件
@@ -205,9 +233,22 @@ EOF
   # 加强权限
   chmod 600 "$INSTALL_DIR"/*.json
 
-  # 创建 systemd 服务
-  SERVICE_FILE="/etc/systemd/system/gost.service"
-  cat > "$SERVICE_FILE" <<EOF
+  # 根据系统创建服务
+  if [ -f /etc/os-release ]; then
+    . /etc/os-release
+    if [[ "$ID" == "alpine" ]]; then
+        create_openrc_service
+        rc-update add gost default
+        rc-service gost start
+        if rc-service gost status &> /dev/null; then
+            echo "✅ 安装完成，gost服务已启动并设置为开机启动 (OpenRC)。"
+        else
+            echo "❌ gost服务启动失败，请执行以下命令查看日志："
+            echo "rc-service gost status"
+        fi
+    else
+        SERVICE_FILE="/etc/systemd/system/gost.service"
+        cat > "$SERVICE_FILE" <<EOF
 [Unit]
 Description=Gost Proxy Service
 After=network.target
@@ -220,22 +261,22 @@ Restart=on-failure
 [Install]
 WantedBy=multi-user.target
 EOF
-
-  # 启动服务
-  systemctl daemon-reload
-  systemctl enable gost
-  systemctl start gost
-
-  # 检查状态
-  echo "🔄 检查服务状态..."
-  if systemctl is-active --quiet gost; then
-    echo "✅ 安装完成，gost服务已启动并设置为开机启动。"
-    echo "📁 配置目录: $INSTALL_DIR"
-    echo "🔧 服务状态: $(systemctl is-active gost)"
+        systemctl daemon-reload
+        systemctl enable gost
+        systemctl start gost
+        if systemctl is-active --quiet gost; then
+            echo "✅ 安装完成，gost服务已启动并设置为开机启动 (systemd)。"
+        else
+            echo "❌ gost服务启动失败，请执行以下命令查看日志："
+            echo "journalctl -u gost -f"
+        fi
+    fi
   else
-    echo "❌ gost服务启动失败，请执行以下命令查看日志："
-    echo "journalctl -u gost -f"
+      echo "❌ 无法识别系统，无法创建服务文件。请手动配置。"
+      exit 1
   fi
+
+  echo "📁 配置目录: $INSTALL_DIR"
 }
 
 # 更新功能
@@ -261,9 +302,12 @@ update_gost() {
   fi
 
   # 停止服务
-  if systemctl list-units --full -all | grep -Fq "gost.service"; then
+  if command -v systemctl &> /dev/null && systemctl list-units --full -all | grep -Fq "gost.service"; then
     echo "🛑 停止 gost 服务..."
     systemctl stop gost
+  elif command -v rc-service &> /dev/null && rc-service -c | grep -Fq "gost"; then
+    echo "🛑 停止 gost 服务 (OpenRC)..."
+    rc-service gost stop
   fi
 
   # 替换文件
@@ -275,7 +319,11 @@ update_gost() {
 
   # 重启服务
   echo "🔄 重启服务..."
-  systemctl start gost
+  if command -v systemctl &> /dev/null; then
+    systemctl start gost
+  elif command -v rc-service &> /dev/null; then
+    rc-service gost start
+  fi
   
   echo "✅ 更新完成，服务已重新启动。"
 }
@@ -290,18 +338,24 @@ uninstall_gost() {
     return 0
   fi
 
-  # 停止并禁用服务
-  if systemctl list-units --full -all | grep -Fq "gost.service"; then
-    echo "🛑 停止并禁用服务..."
+  # 停止并禁用服务 (systemd)
+  if command -v systemctl &> /dev/null && systemctl list-units --full -all | grep -Fq "gost.service"; then
+    echo "🛑 停止并禁用服务 (systemd)..."
     systemctl stop gost 2>/dev/null
     systemctl disable gost 2>/dev/null
-  fi
-
-  # 删除服务文件
-  if [[ -f "/etc/systemd/system/gost.service" ]]; then
     rm -f "/etc/systemd/system/gost.service"
     echo "🧹 删除服务文件"
   fi
+
+  # 停止并禁用服务 (OpenRC)
+  if command -v rc-service &> /dev/null && rc-service -c | grep -Fq "gost"; then
+    echo "🛑 停止并禁用服务 (OpenRC)..."
+    rc-service gost stop 2>/dev/null
+    rc-update del gost 2>/dev/null
+    rm -f "/etc/init.d/gost"
+    echo "🧹 删除服务文件"
+  fi
+
 
   # 删除安装目录
   if [[ -d "$INSTALL_DIR" ]]; then
@@ -310,7 +364,9 @@ uninstall_gost() {
   fi
 
   # 重载 systemd
-  systemctl daemon-reload
+  if command -v systemctl &> /dev/null; then
+    systemctl daemon-reload
+  fi
 
   echo "✅ 卸载完成"
 }
