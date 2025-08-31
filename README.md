@@ -70,14 +70,14 @@
 
 ```bash
 
-暂时没时间写，能源码部署的都是大佬，不差我这点文档
+作者已经停更，我是小菜鸡，能源码部署的都是大佬，不差我这点文档
 ```
 ---
 ### Docker Compose部署
 #### 快速部署
 
 ```bash
-curl -L https://raw.githubusercontent.com/bqlpfy/flux-panel/refs/heads/main/panel_install.sh -o panel_install.sh && chmod +x panel_install.sh && ./panel_install.sh
+curl -L hhttps://raw.githubusercontent.com/StarVM-OpenSource/flux-panel/refs/heads/main/panel_install.sh -o panel_install.sh && chmod +x panel_install.sh && ./panel_install.sh
 
 ```
 
@@ -116,7 +116,7 @@ curl -L https://raw.githubusercontent.com/bqlpfy/flux-panel/refs/heads/main/pane
 请确保在合法、合规、安全的前提下使用本项目。
 
 ---
-## ⭐ 喝杯咖啡！
+## ⭐ 请作者喝杯咖啡！
 
 | 网络       | 地址                                                                 |
 |------------|----------------------------------------------------------------------|
@@ -124,11 +124,20 @@ curl -L https://raw.githubusercontent.com/bqlpfy/flux-panel/refs/heads/main/pane
 | TRC20      | `TYh2L3xxXpuJhAcBWnt3yiiADiCSJLgUm7`                                  |
 | Aptos      | `0xf2f9fb14749457748506a8281628d556e8540d1eb586d202cd8b02b99d369ef8`  |
 
+## ⭐ 请菜鸡喝杯咖啡（小声BB）
 
+| 网络       | 地址                                                                 |
+|------------|----------------------------------------------------------------------|
+| TRC20      | `TYQh6SyATDik7qfAkr34fPuEw1P1TfNTxH`                                  |
 
 ---
 
-**⭐ 如果这个项目对您有帮助，请给个 Star 支持一下！**
+**⭐ 如果这个项目对您有帮助，请给个 Star 支持一下！（图为作者仓库的Star）**
 
 [![Star History Chart](https://api.star-history.com/svg?repos=bqlpfy/flux-panel&type=Date)](https://www.star-history.com/#bqlpfy/flux-panel&Date)
 
+作者仓库直达：[Github](https://github.com/bqlpfy/flux-panel)
+
+**⭐ 本仓库Star**
+
+[![Star History Chart](https://api.star-history.com/svg?repos=StarVM-OpenSource/flux-panel&type=Date)](https://www.star-history.com/#StarVM-OpenSource/flux-panel&Date)
