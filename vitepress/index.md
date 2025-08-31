@@ -7,9 +7,6 @@ hero:
   tagline: "功能强大的流量转发管理平台，支持灵活的流量计费和限速功能"
   actions:
     - theme: brand
-      text: "Cloudflare"
-      link: https://www.cloudflare.com/
-    - theme: brand
       text: 快速开始
       link: /getting-started
     - theme: alt
