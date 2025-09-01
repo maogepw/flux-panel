@@ -1,7 +1,6 @@
 services:
   mysql:
-    image: mysql:5.7
-    platform: linux/arm64   # <-- 指定 ARM64 架构
+    image: creamysellotape0/mysql5.7:0.2
     container_name: gost-mysql
     restart: unless-stopped
     environment:
@@ -66,6 +65,7 @@ services:
     networks:
       - gost-network
 
+
 volumes:
   mysql_data:
     name: mysql_data
@@ -73,6 +73,7 @@ volumes:
   backend_logs:
     name: backend_logs
     driver: local
+
 
 networks:
   gost-network:
