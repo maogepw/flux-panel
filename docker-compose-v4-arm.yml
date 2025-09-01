@@ -1,6 +1,6 @@
 services:
   mysql:
-    image: arm64v8/mysql:5.7
+    image: mysql/mysql-server:5.7
     container_name: gost-mysql
     restart: unless-stopped
     environment:
