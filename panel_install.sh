@@ -5,24 +5,28 @@ set -e
 export LANG=en_US.UTF-8
 export LC_ALL=C
 
-
-
 # 全局下载地址配置
 DOCKER_COMPOSEV4_URL="https://raw.githubusercontent.com/StarVM-OpenSource/flux-panel/refs/heads/main/docker-compose-v4.yml"
 DOCKER_COMPOSEV6_URL="https://raw.githubusercontent.com/StarVM-OpenSource/flux-panel/refs/heads/main/docker-compose-v6.yml"
 GOST_SQL_URL="https://raw.githubusercontent.com/StarVM-OpenSource/flux-panel/refs/heads/main/gost.sql"
 PROXY_SH_URL="https://raw.githubusercontent.com/StarVM-OpenSource/flux-panel/refs/heads/main/proxy.sh"
 
+# 检测系统架构
+ARCH=$(uname -m)
+if [ "$ARCH" = "arm64" ] || [ "$ARCH" = "aarch64" ]; then
+    DOCKER_COMPOSEV4_URL="https://raw.githubusercontent.com/StarVM-OpenSource/flux-panel/refs/heads/main/docker-compose-v4-arm.yml"
+    DOCKER_COMPOSEV6_URL="https://raw.githubusercontent.com/StarVM-OpenSource/flux-panel/refs/heads/main/docker-compose-v6-arm.yml"
+fi
+
+# 检测是否在中国
 COUNTRY=$(curl -s https://ipinfo.io/country)
 if [ "$COUNTRY" = "CN" ]; then
-    # 拼接 URL
+    # 拼接加速 URL
     DOCKER_COMPOSEV4_URL="https://ghfast.top/${DOCKER_COMPOSEV4_URL}"
     DOCKER_COMPOSEV6_URL="https://ghfast.top/${DOCKER_COMPOSEV6_URL}"
     GOST_SQL_URL="https://ghfast.top/${GOST_SQL_URL}"
     PROXY_SH_URL="https://ghfast.top/${PROXY_SH_URL}"
 fi
-
-
 
 # 根据IPv6支持情况选择docker-compose URL
 get_docker_compose_url() {
