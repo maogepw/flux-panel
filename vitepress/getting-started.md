@@ -2,10 +2,6 @@
 
 本指南将帮助您快速安装和配置flux-panel，让您在几分钟内开始使用流量转发功能。
 
-::: tip 需要帮助？
-🐛 [GitHub Issues](https://github.com/StarVM-OpenSource/flux-panel/issues) | 🤔 [常见问题](/faq)
-:::
-
 ## 系统要求
 
 在开始之前，请确保您的系统满足以下要求：
@@ -22,7 +18,7 @@
 我们提供了交互式安装脚本，会自动检测系统环境并引导您完成配置：
 
 ```bash
-curl -L https://raw.githubusercontent.com/StarVM-OpenSource/flux-panel/refs/heads/main/panel_install.sh -o panel_install.sh && chmod +x panel_install.sh && ./panel_install.sh
+curl -L https://raw.githubusercontent.com/maogepw/flux-panel/refs/heads/main/panel_install.sh -o panel_install.sh && chmod +x panel_install.sh && ./panel_install.sh
 ```
 
 ### 安装流程说明
@@ -124,11 +120,7 @@ docker compose ps
    - 检查系统要求是否满足
    - 验证 Docker 和网络配置
 
-2. **🐛 GitHub Issues**
-   - [报告问题](https://github.com/StarVM-OpenSource/flux-panel/issues/new)
-   - 查看 [已知问题(源作者停止维护前)](https://github.com/bqlpfy/flux-panel/issues)
-   - 查看 [已知问题(停止维护后)](https://github.com/StarVM-OpenSource/flux-panel/issues)
 
-3. **📖 文档资源**
+2. **📖 文档资源**
    - [使用指南](/guide) - 详细的操作教程
    - [常见问题](/faq) - 快速解决方案和管理操作指南 
