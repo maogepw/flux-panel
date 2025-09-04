@@ -1,6 +1,6 @@
 #!/bin/bash
 # 下载地址基础 URL
-DOWNLOAD_URL_BASE="https://github.com/StarVM-OpenSource/flux-panel/releases/download/gost-latest/gost"
+DOWNLOAD_URL_BASE="https://github.com/maogepw/flux-panel/releases/download/gost-latest/gost"
 INSTALL_DIR="/etc/gost"
 
 # 检查系统架构
