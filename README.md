@@ -3,10 +3,12 @@
 
 本项目基于 [go-gost/gost](https://github.com/go-gost/gost) 和 [go-gost/x](https://github.com/go-gost/x) 两个开源库，实现了转发面板。
 
-作者已停更，哀悼这么好的一个项目，倒卖的那个祝你身体健康
+- 特别说明：
+- 原作者已删库，仅为fork纪念版。
+- 方便后人使用。少有的开源面板，不该湮灭断绝。
 ---
 ## 文档地址
-- [文档地址](https://flux-panel.lxc.wiki/)
+- [文档地址](https://maogepw.github.io/flux-panel)
 ---
 ## 特性
 
@@ -77,7 +79,7 @@
 #### 快速部署
 
 ```bash
-curl -L hhttps://raw.githubusercontent.com/StarVM-OpenSource/flux-panel/refs/heads/main/panel_install.sh -o panel_install.sh && chmod +x panel_install.sh && ./panel_install.sh
+curl -L hhttps://raw.githubusercontent.com/maogepw/flux-panel/refs/heads/main/panel_install.sh -o panel_install.sh && chmod +x panel_install.sh && ./panel_install.sh
 
 ```
 
@@ -116,28 +118,3 @@ curl -L hhttps://raw.githubusercontent.com/StarVM-OpenSource/flux-panel/refs/hea
 请确保在合法、合规、安全的前提下使用本项目。
 
 ---
-## ⭐ 请作者喝杯咖啡！
-
-| 网络       | 地址                                                                 |
-|------------|----------------------------------------------------------------------|
-| BNB(BEP20) | `0x755492c03728851bbf855daa28a1e089f9aca4d1`                          |
-| TRC20      | `TYh2L3xxXpuJhAcBWnt3yiiADiCSJLgUm7`                                  |
-| Aptos      | `0xf2f9fb14749457748506a8281628d556e8540d1eb586d202cd8b02b99d369ef8`  |
-
-## ⭐ 请菜鸡喝杯咖啡（小声BB）
-
-| 网络       | 地址                                                                 |
-|------------|----------------------------------------------------------------------|
-| TRC20      | `TYQh6SyATDik7qfAkr34fPuEw1P1TfNTxH`                                  |
-
----
-
-**⭐ 如果这个项目对您有帮助，请给个 Star 支持一下！（图为作者仓库的Star）**
-
-[![Star History Chart](https://api.star-history.com/svg?repos=bqlpfy/flux-panel&type=Date)](https://www.star-history.com/#bqlpfy/flux-panel&Date)
-
-作者仓库直达：[Github](https://github.com/bqlpfy/flux-panel)
-
-**⭐ 本仓库Star**
-
-[![Star History Chart](https://api.star-history.com/svg?repos=StarVM-OpenSource/flux-panel&type=Date)](https://www.star-history.com/#StarVM-OpenSource/flux-panel&Date)
