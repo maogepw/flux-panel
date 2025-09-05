@@ -26,7 +26,7 @@ services:
       retries: 10
 
   backend:
-    image: maogewpw/springboot-backend:latest
+    image: maogepw/springboot-backend:latest
     container_name: springboot-backend
     restart: unless-stopped
     environment:
